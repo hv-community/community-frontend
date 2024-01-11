@@ -1,10 +1,20 @@
+import { Route, Routes } from "react-router-dom";
+import Header from "./component/Header";
+import Member from "./member/Member";
+import Community from "./community/Community";
+import Home from "./home/Home";
+
 export default function App() {
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <button className="bg-sky-700 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3">
-        ...
-      </button>
+      <Routes>
+        <Route path="/*" element={<Header />} />
+      </Routes>
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="community/*" element={<Community />} />
+        <Route path="member/*" element={<Member />} />
+      </Routes>
     </>
   );
 }
