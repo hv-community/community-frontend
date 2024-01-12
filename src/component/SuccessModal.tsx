@@ -12,27 +12,30 @@ export default function SuccessModal() {
         <p className="mb-4 text-lg font-semibold text-white">
           {globalState.modalMessage}
         </p>
-        {globalState.redirectUrl ? (
-          <button
-            className="rounded bg-indigo-500 px-4 py-2 text-white"
-            onClick={(e) => {
-              e.preventDefault();
-              resetGlobalState();
-              navigate(`${globalState.redirectUrl}`);
-            }}
-          >
-            {globalState.redirectName}
-          </button>
-        ) : (
-          <button
-            className="rounded bg-indigo-500 px-4 py-2 text-white"
-            onClick={() => {
-              setGlobalState({ ...globalState, modalMessage: "" });
-            }}
-          >
-            닫기
-          </button>
-        )}
+
+        <div className="flex">
+          {globalState.redirectUrl ? (
+            <button
+              className="mx-auto rounded bg-indigo-500 px-4 py-2 text-white"
+              onClick={(e) => {
+                e.preventDefault();
+                resetGlobalState();
+                navigate(`${globalState.redirectUrl}`);
+              }}
+            >
+              {globalState.redirectName}
+            </button>
+          ) : (
+            <button
+              className="rounded bg-indigo-500 px-4 py-2 text-white"
+              onClick={() => {
+                setGlobalState({ ...globalState, modalMessage: "" });
+              }}
+            >
+              닫기
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

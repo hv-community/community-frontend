@@ -1,4 +1,4 @@
-interface CommunityState {
+interface CommunityList {
   items: Array<Community>;
   page: number;
   page_size: number;
@@ -14,7 +14,7 @@ interface Community {
   thumbnail: string;
 }
 
-interface PostState {
+interface PostList {
   items: Array<Post>;
   page: number;
   page_size: number;
@@ -36,7 +36,7 @@ interface Post {
   modification_time: Date;
 }
 
-interface ReplyState {
+interface ReplyList {
   items: Array<Reply>;
   page: number;
   page_size: number;

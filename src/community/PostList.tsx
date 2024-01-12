@@ -7,7 +7,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export default function PostList() {
   const { globalState, setGlobalState } = useGlobalStore();
   const { communityId } = useParams();
-  const [postList, setPostList] = useState<PostState>({
+  const [postList, setPostList] = useState<PostList>({
     items: [],
     page: 0,
     page_size: 0,
@@ -53,20 +53,20 @@ export default function PostList() {
         <>
           <div className="mx-2 mb-4 flex text-sm font-light text-white">
             <div
-              className="border-bgGray border-2 bg-black p-1"
+              className="border-2 border-bgGray bg-black p-1"
               onClick={() => {
                 handleClickPostList();
               }}
             >
               전체글
             </div>
-            <div className="border-bgGray border-y-2 border-r-2 bg-red-600 p-1 ">
+            <div className="border-y-2 border-r-2 border-bgGray bg-red-600 p-1 ">
               개념글
             </div>
             <div
-              className="border-bgGray ml-auto border-2 bg-black p-1"
+              className="ml-auto border-2 border-bgGray bg-black p-1"
               onClick={() => {
-                navigate(`/community/${communityId}/create`);
+                navigate(`/community/${communityId}/editor`);
               }}
             >
               글쓰기
@@ -79,8 +79,8 @@ export default function PostList() {
               <div className="my-1 border-b-2 border-gray-700"></div>
             </div>
           ))}
-          <div className="border-bgGray mx-2 mb-2 mt-2 flex w-fit border-2 text-white">
-            <div className="border-bgGray border-r-2 bg-black p-1 text-sm font-light">
+          <div className="mx-2 mb-2 mt-2 flex w-fit border-2 border-bgGray text-white">
+            <div className="border-r-2 border-bgGray bg-black p-1 text-sm font-light">
               전체글
             </div>
             <div className="bg-red-600 p-1 text-sm font-light">개념글</div>
@@ -91,30 +91,12 @@ export default function PostList() {
   );
 }
 
-// 시간형식 만드는 함수
-const formatTimeDifference = (time: Date) => {
-  const now = new Date();
-  const postTime = new Date(time);
-  const differenceInSeconds = Math.floor(
-    (now.getTime() - postTime.getTime()) / 1000,
-  );
-
-  if (differenceInSeconds < 86400) {
-    const hours = Math.floor(differenceInSeconds / 3600);
-    const minutes = Math.floor((differenceInSeconds % 3600) / 60);
-    return `${hours}:${minutes < 10 ? "0" : ""}${minutes}`;
-  } else {
-    const month = postTime.getMonth() + 1;
-    const day = postTime.getDate();
-    return `${month}-${day}`;
-  }
-};
-interface PostProp {
+interface PostProps {
   communityId: string | undefined;
   post: Post;
 }
 // 게시판내 게시글 하나씩 표시하는 컴포넌트
-const Post = ({ communityId, post }: PostProp) => {
+const Post = ({ communityId, post }: PostProps) => {
   const navigate = useNavigate();
   const handlePost = () => {
     navigate(`/community/${communityId}/${post.id}`);
@@ -147,4 +129,23 @@ const Post = ({ communityId, post }: PostProp) => {
       </div>
     </div>
   );
+};
+
+// 시간형식 만드는 함수
+const formatTimeDifference = (time: Date) => {
+  const now = new Date();
+  const postTime = new Date(time);
+  const differenceInSeconds = Math.floor(
+    (now.getTime() - postTime.getTime()) / 1000,
+  );
+
+  if (differenceInSeconds < 86400) {
+    const hours = Math.floor(differenceInSeconds / 3600);
+    const minutes = Math.floor((differenceInSeconds % 3600) / 60);
+    return `${hours}:${minutes < 10 ? "0" : ""}${minutes}`;
+  } else {
+    const month = String(postTime.getMonth() + 1).padStart(2, "0");
+    const day = String(postTime.getDate()).padStart(2, "0");
+    return `${month}-${day}`;
+  }
 };
